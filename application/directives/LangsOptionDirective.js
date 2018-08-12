@@ -11,11 +11,18 @@ export default function LangsOptionDirective( ){
             'langs': '='
         },
         controller: [ '$scope' , function ( $scope ){
+            if ($scope.$parent.currentLang){
 
-            $scope.currentLang = $scope.langs[0];
+                $scope.currentLang = $scope.$parent.currentLang;
+            }
+            else{
+                $scope.currentLang =  $scope.langs[0];
+
+            }
+
             $scope.changeLanguage = function ( newLanguage ){
 
-                console.log(newLanguage);
+                //console.log(newLanguage);
                 $scope.$parent.updateTranslations( newLanguage );
 
             };
@@ -26,7 +33,7 @@ export default function LangsOptionDirective( ){
             let options = '';
 
             scope.langs.forEach( (lang) => {
-                options += `<option value="${lang}" >${lang}</option>`;
+                options += `<option>${lang}</option>`;
             } );
 
             element.html( options );

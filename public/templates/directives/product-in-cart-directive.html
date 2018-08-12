@@ -1,0 +1,28 @@
+
+<div ng-repeat="product in products" class="clearfix productCartRow" >
+
+<div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 productImg cartCol">
+    <img ng-src="{{product.ProductImage}}" alt="product.ProductTitle">
+</div>
+<div class=" col-lg-6 col-md-6 col-sm-6 col-xs-12 productCartText cartCol">
+
+    <div class="productBlock">
+        <h3 ng-bind="product.ProductTitle"></h3>
+        <p class="text-justify" ng-bind="product.Snippet"></p>
+    </div>
+
+</div>
+<div class="text-center col-lg-1 col-md-1 col-sm-1 col-xs-12 productCartText cartCol" ng-bind-template="${{product.ProductPrice}}">
+    $99,00
+</div>
+<div class="text-center col-lg-1 col-md-1 col-sm-1 col-xs-12 productCartText cartCol">
+    <input ng-change="changeAmount(product)" class="input" type="text" ng-model="product.amount">
+</div>
+<div class="text-center col-lg-1 col-md-1 col-sm-1 col-xs-12 productCartText cartCol">
+    ${{product.ProductPrice*product.amount}}
+</div>
+<div ng-click="removeProduct($index)" class="text-center col-lg-1 col-md-1 col-sm-1 col-xs-12 productCartText cartCol cartDelete">
+    <a href="#">s</a>
+</div>
+
+</div>

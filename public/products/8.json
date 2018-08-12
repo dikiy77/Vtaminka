@@ -1,7 +1,7 @@
 {
-  "ProductID": "1",
-  "ProductTitle": "Витамин 1",
-  "ProductPrice": "25",
+  "ProductID": "8",
+  "ProductTitle": "Витамин 8",
+  "ProductPrice": "35",
   "Images": [
     "images/vitamin1.jpg"
   ],

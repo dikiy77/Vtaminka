@@ -13,6 +13,8 @@ import CartService from './services/CartService';
 //====================DIRECTIVES==============================//
 import LangsOptionDirective from './directives/LangsOptionDirective';
 import ProductDirective from './directives/ProductDirective';
+import CartDirective from './directives/CartDirective';
+import ProductInCartDirective from './directives/ProductInCartDirective';
 
 angular.module('VtaminkaApplication.controllers' , []);
 angular.module('VtaminkaApplication.services' , []);
@@ -55,6 +57,11 @@ angular.module('VtaminkaApplication.directives')
 angular.module('VtaminkaApplication.directives')
     .directive('productDirective' , [ ProductDirective ]);
 
+angular.module('VtaminkaApplication.directives')
+    .directive('cartDirective' , [ CartDirective ]);
+
+angular.module('VtaminkaApplication.directives')
+    .directive('productInCartDirective' , [ ProductInCartDirective ]);
 
 let app = angular.module('VtaminkaApplication',[
     'angular-loading-bar',
@@ -157,7 +164,53 @@ app.config( [
             'resolve': {
 
                 'products': [ 'ProductService' , function ( ProductService ){
-                    return ProductService.getProducts();
+                    return ProductService.getProductsInCart();
+                } ],
+                'langs': [ 'LocaleService' , function ( LocaleService ){
+                    return LocaleService.getLangs();
+                }  ]
+
+            }
+        });
+
+    $stateProvider.state('SingleProduct' , {
+            'url': '/product/:productID',
+            'views':{
+                "header":{
+                    "templateUrl": "templates/header.html",
+                    controller: [ '$scope' , 'CartService' , 'langs' , function ($scope, CartService , langs ){
+                        $scope.langs = langs;
+                        $scope.cart = CartService.getCart();
+                    } ]
+                },
+                "content": {
+                    'templateUrl': "templates/product/single-product.html",
+                    controller: [ '$scope' ,  'CartService' , 'product' , function ($scope , CartService , product){
+
+                        $scope.product = product;
+                        $scope.cart = CartService.getCart();
+
+                        $scope.changeAmount = function ( product ){
+                            CartService.changeAmound( product );
+                        };
+
+                        $scope.AddProduct = function ( product ){
+                            $scope.product.isInCart = true;
+
+                            CartService.addProduct( $scope.product );
+                            console.log( "AddProduct" );
+                        };
+
+                    } ]
+                },
+                "footer": {
+                    'templateUrl': "templates/footer.html",
+                }
+            },
+            'resolve': {
+
+                'product': [ 'ProductService' , '$stateParams' , function ( ProductService , $stateParams ){
+                    return ProductService.getSingleProduct($stateParams.productID);
                 } ],
                 'langs': [ 'LocaleService' , function ( LocaleService ){
                     return LocaleService.getLangs();

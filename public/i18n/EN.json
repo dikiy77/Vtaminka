@@ -4,6 +4,27 @@
   "LAYOUT_PRODUCTS_LINK": "Products",
   "LAYOUT_BLOG_LINK": "Blog",
   "LAYOUT_ABOUT_LINK": "About",
-  "LAYOUT_CONTACTS_LINK": "Contacts"
+  "LAYOUT_CONTACTS_LINK": "Contacts",
+  "LAYOUT_MANS_LINK": "Mans",
+  "LAYOUT_FEMALE_LINK": "Female",
+  "LAYOUT_CHILDRENS_LINK": "Childrens",
+  "LAYOUT_SPORTS_LINK": "Sports",
+  "LAYOUT_CATALOGUE_LINK": "Catalogue",
+  "LAYOUT_MORE_LINK": "More...",
+  "LAYOUT_ADD_TO_CART_LINK": "Add to cart",
+  "LAYOUT_IN_CART_LINK": "Already",
+  "LAYOUT_VITAMINKA_LINK": "Vitamin",
+  "LAYOUT_LATEST_ARTICLES_LINK": "Latest articles",
+  "LAYOUT_JOIN_US_LINK": "Join us",
+  "LAYOUT_REGISTRATION_LINK": "Registration",
+  "LAYOUT_AUTHORIZATION_LINK": "Authorization",
+  "LAYOUT_NEWS_LINK": "News",
+  "LAYOUT_CONTACT_US_LINK": "Contact us!",
+  "LAYOUT_YOUR_NAME_LINK": "Your name",
+  "LAYOUT_CONTACT_EMAIL_LINK": "Contact email",
+  "LAYOUT_CONTACT_NUMBER_LINK": "Contact number",
+  "LAYOUT_SEND_LINK": "SEND",
+  "LAYOUT_BASKET_LINK": "Basket",
+  "LAYOUT_TOTAL_LINK": "Total"
 
 }

@@ -101,6 +101,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _services_CartService__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./services/CartService */ "./application/services/CartService.js");
 /* harmony import */ var _directives_LangsOptionDirective__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./directives/LangsOptionDirective */ "./application/directives/LangsOptionDirective.js");
 /* harmony import */ var _directives_ProductDirective__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./directives/ProductDirective */ "./application/directives/ProductDirective.js");
+/* harmony import */ var _directives_CartDirective__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./directives/CartDirective */ "./application/directives/CartDirective.js");
+/* harmony import */ var _directives_ProductInCartDirective__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./directives/ProductInCartDirective */ "./application/directives/ProductInCartDirective.js");
 
 
 //====================CONTROLLERS===========================//
@@ -114,6 +116,8 @@ __webpack_require__.r(__webpack_exports__);
 //====================FILTERS==============================//
 
 //====================DIRECTIVES==============================//
+
+
 
 
 
@@ -158,6 +162,11 @@ angular.module('VtaminkaApplication.directives')
 angular.module('VtaminkaApplication.directives')
     .directive('productDirective' , [ _directives_ProductDirective__WEBPACK_IMPORTED_MODULE_5__["default"] ]);
 
+angular.module('VtaminkaApplication.directives')
+    .directive('cartDirective' , [ _directives_CartDirective__WEBPACK_IMPORTED_MODULE_6__["default"] ]);
+
+angular.module('VtaminkaApplication.directives')
+    .directive('productInCartDirective' , [ _directives_ProductInCartDirective__WEBPACK_IMPORTED_MODULE_7__["default"] ]);
 
 let app = angular.module('VtaminkaApplication',[
     'angular-loading-bar',
@@ -260,7 +269,53 @@ app.config( [
             'resolve': {
 
                 'products': [ 'ProductService' , function ( ProductService ){
-                    return ProductService.getProducts();
+                    return ProductService.getProductsInCart();
+                } ],
+                'langs': [ 'LocaleService' , function ( LocaleService ){
+                    return LocaleService.getLangs();
+                }  ]
+
+            }
+        });
+
+    $stateProvider.state('SingleProduct' , {
+            'url': '/product/:productID',
+            'views':{
+                "header":{
+                    "templateUrl": "templates/header.html",
+                    controller: [ '$scope' , 'CartService' , 'langs' , function ($scope, CartService , langs ){
+                        $scope.langs = langs;
+                        $scope.cart = CartService.getCart();
+                    } ]
+                },
+                "content": {
+                    'templateUrl': "templates/product/single-product.html",
+                    controller: [ '$scope' ,  'CartService' , 'product' , function ($scope , CartService , product){
+
+                        $scope.product = product;
+                        $scope.cart = CartService.getCart();
+
+                        $scope.changeAmount = function ( product ){
+                            CartService.changeAmound( product );
+                        };
+
+                        $scope.AddProduct = function ( product ){
+                            $scope.product.isInCart = true;
+
+                            CartService.addProduct( $scope.product );
+                            console.log( "AddProduct" );
+                        };
+
+                    } ]
+                },
+                "footer": {
+                    'templateUrl': "templates/footer.html",
+                }
+            },
+            'resolve': {
+
+                'product': [ 'ProductService' , '$stateParams' , function ( ProductService , $stateParams ){
+                    return ProductService.getSingleProduct($stateParams.productID);
                 } ],
                 'langs': [ 'LocaleService' , function ( LocaleService ){
                     return LocaleService.getLangs();
@@ -300,9 +355,66 @@ class MainController{
 
         $scope.updateTranslations = function ( lang ){
             $translate.use(lang);
+            $scope.currentLang = lang;
         }
 
     }//constructor
+
+}
+
+/***/ }),
+
+/***/ "./application/directives/CartDirective.js":
+/*!*************************************************!*\
+  !*** ./application/directives/CartDirective.js ***!
+  \*************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return CartDirective; });
+
+
+
+function CartDirective( ){
+
+    return {
+
+        restrict: 'A',
+        scope: {
+            products: '='
+        },
+        templateUrl: 'templates/directives/cart-directive.html',
+        controller: [ '$scope' , 'CartService' , function ( $scope , CartService){
+
+            $scope.summ = $scope.products.reduce(function (sum, current) {
+
+                return sum + (current.amount * current.ProductPrice);
+            }, 0);
+
+
+            CartService.OnSummRefresh( ()=>{
+                $scope.summ = $scope.products.reduce(function (sum, current) {
+
+                    return sum + (current.amount * current.ProductPrice);
+                }, 0);
+            } );
+
+
+        } ],
+        link: function ( scope , element ){
+
+            // new SelectFx(
+            //     // element.context.querySelector('select.cs-select'),
+            //     // {
+            //     //     onChange: scope.changeAmount // let val = this.value; scope.changeAmount( val )
+            //     // }
+            // );
+            ripplyScott.init('.button', 0.75);
+
+        }
+    }
 
 }
 
@@ -331,11 +443,18 @@ function LangsOptionDirective( ){
             'langs': '='
         },
         controller: [ '$scope' , function ( $scope ){
+            if ($scope.$parent.currentLang){
 
-            $scope.currentLang = $scope.langs[0];
+                $scope.currentLang = $scope.$parent.currentLang;
+            }
+            else{
+                $scope.currentLang =  $scope.langs[0];
+
+            }
+
             $scope.changeLanguage = function ( newLanguage ){
 
-                console.log(newLanguage);
+                //console.log(newLanguage);
                 $scope.$parent.updateTranslations( newLanguage );
 
             };
@@ -346,7 +465,7 @@ function LangsOptionDirective( ){
             let options = '';
 
             scope.langs.forEach( (lang) => {
-                options += `<option value="${lang}" >${lang}</option>`;
+                options += `<option>${lang}</option>`;
             } );
 
             element.html( options );
@@ -417,6 +536,68 @@ function ProductDirective( ){
 
 /***/ }),
 
+/***/ "./application/directives/ProductInCartDirective.js":
+/*!**********************************************************!*\
+  !*** ./application/directives/ProductInCartDirective.js ***!
+  \**********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ProductInCartDirective; });
+
+
+function ProductInCartDirective() {
+    return {
+
+        restrict: 'AE',
+        scope: {
+            products: '=',
+
+        },
+        templateUrl: 'templates/directives/product-in-cart-directive.html',
+        controller: [ '$scope' , 'CartService' , function ( $scope , CartService){
+
+            $scope.changeAmount = function ( product ){
+
+                // if(product.amount === "0" || product.amount === ""){
+                //     product.amount = 1;
+                // }
+
+                CartService.changeAmound( product );
+                //console.log( CartService.getCart() )
+
+                CartService.summRefresh();
+
+            }
+
+            $scope.removeProduct = function ( index ) {
+
+                CartService.removeProduct(index);
+
+                $scope.products.splice(index, 1);
+
+                CartService.summRefresh();
+
+            }
+        } ],
+        link: function ( scope , element ){
+
+            // new SelectFx(
+            //     element.context.querySelector('select.cs-select'),
+            //     {
+            //         onChange: scope.changeAmount // let val = this.value; scope.changeAmount( val )
+            //     }
+            // );
+            ripplyScott.init('.button', 0.75);
+
+        }
+    }
+}//ProductInCartDirective
+
+/***/ }),
+
 /***/ "./application/services/CartService.js":
 /*!*********************************************!*\
   !*** ./application/services/CartService.js ***!
@@ -468,9 +649,23 @@ class CartService{
 
     }//addProduct
 
+    changeAmound( product ){
+
+        for (let i = 0; i < this.cart.length; i++){
+            if (product.ProductID === this.cart[i].id) {
+
+                this.cart[i].amount =  product.amount;
+
+                this._localStorageService.set('cart' , this.cart);
+                return;
+            }
+        }
+
+    }//changeAmound
+
     getShortProduct( product ){
 
-            console.log(product.ProductID);
+            //console.log(product.ProductID);
 
         return {
             'id' : product.ProductID,
@@ -484,7 +679,23 @@ class CartService{
         this.cart.length = 0;
     }
 
-}
+    removeProduct ( index ){
+
+        this.cart.splice( index, 1 );
+
+        this._localStorageService.set('cart' , this.cart);
+
+    }//removeProduct
+
+    OnSummRefresh(callback){
+        this._refreshSumm = callback;
+    }
+
+    summRefresh(){
+        if(this._refreshSumm)
+        this._refreshSumm();
+    }
+}//CartService
 
 /***/ }),
 
@@ -610,6 +821,83 @@ class ProductService{
 
 
     }//getProducts
+
+    async getProductsInCart(){
+        try {
+            let response = await this._$http.get( `${this._HOST}${this._GET_PRODUCTS}` );
+
+            let products = response.data;
+
+            let cart = this._CartService.getCart();
+
+            let productsInCart = [];
+
+            if(cart.length === 0){
+               return [];
+            }
+
+            products.forEach( p => {
+                if(this._CartService.isExist( p )){
+
+                    for (let i = 0; i < cart.length; i++){
+                        if (p.ProductID === cart[i].id) {
+                            p.amount = cart[i].amount;
+                            p.isInCart = true;
+                            productsInCart.push(p);
+                        }
+                    }
+
+                }//if
+                else {
+                    p.amount = 1;
+                    p.isInCart = false;
+                }
+            } );
+
+
+
+            return productsInCart;
+        }//try
+        catch{
+            console.log("Exeption: getProductsInCart");
+            return [];
+        }//catch
+
+
+    }//getProductsInCart
+
+    async getSingleProduct(productId){
+        try {
+            let response = await this._$http.get( `${this._HOST}/products/${productId}.json` );
+
+            let product = response.data;
+
+            let cart = this._CartService.getCart();
+
+            if(this._CartService.isExist( product )){
+                console.log(product);
+                for (let i = 0; i < cart.length; i++){
+                    if (product.ProductID === cart[i].id) {
+                        product.amount = cart[i].amount;
+                        product.isInCart = true;
+                    }
+                }
+
+            }//if
+            else {
+                product.amount = 1;
+                product.isInCart = false;
+            }
+
+            return product;
+        }//try
+        catch{
+            console.log("Exeption: getSingleProduct");
+            return [];
+        }//catch
+
+
+    }//getSingleProduct
 
 
 }//ProductService

@@ -1,0 +1,50 @@
+<div class="bannerSlim" style="background-image: url('images/banner.png'); background-position-y: 55%;">
+    <div class="bannerWrap"></div>
+    <h2 translate="LAYOUT_BASKET_LINK">Корзина</h2>
+</div>
+<div class="wrapper clearfix">
+    <!-- SVG Sprite -->
+    <div style="height: 0; width: 0; position: absolute; visibility: hidden;" aria-hidden="true">
+        <svg version="1.1" xmlns="http://www.w2.org/2000/svg" xmlns:xlink="http://www.w2.org/1999/xlink" focusable="false">
+            <symbol id="ripply-scott" viewBox="0 0 100 100">
+                <circle id="ripple-shape" cx="1" cy="1" r="1" />
+            </symbol>
+        </svg>
+    </div>
+
+    <div class="breadCrumbs">
+        <a ui-sref="home" translate="LAYOUT_MAIN_LINK">Главная</a>
+        <div class="delimeter"></div>
+        <a ui-sref="cart" translate="LAYOUT_BASKET_LINK">Корзина</a>
+    </div>
+
+    <product-in-cart-directive products="products">
+
+    </product-in-cart-directive>
+
+
+    <div class="clearfix">
+        <div class="clearfix productCartRow cartAllCount">
+            <!--                        Итого:
+                                    <span>$500,00</span>-->
+            <div class=" col-lg-6 col-md-6 col-sm-6 col-xs-12 productCartText cartCol">
+
+                <h3 class="text-left" style="margin-bottom: 0px;" translate="LAYOUT_TOTAL_LINK">Итого</h3>
+
+            </div>
+            <div class="text-center empty col-lg-1 col-md-1 col-sm-1 col-xs-12 productCartText cartCol">
+                <!--                            $99,00-->
+            </div>
+            <div class="text-center col-lg-1 col-md-1 col-sm-1 col-xs-12 productCartText cartCol" ng--bind="products.length">
+                8
+            </div>
+            <div class="text-center col-lg-1 col-md-1 col-sm-1 col-xs-12 productCartText cartCol" ng--bind="summ">
+                $500,00
+            </div>
+            <div class="text-center empty col-lg-1 col-md-1 col-sm-1 col-xs-12 productCartText cartCol">
+                <!--                            X-->
+            </div>
+        </div>
+    </div>
+
+</div>

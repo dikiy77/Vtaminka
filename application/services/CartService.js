@@ -39,9 +39,23 @@ export default class CartService{
 
     }//addProduct
 
+    changeAmound( product ){
+
+        for (let i = 0; i < this.cart.length; i++){
+            if (product.ProductID === this.cart[i].id) {
+
+                this.cart[i].amount =  product.amount;
+
+                this._localStorageService.set('cart' , this.cart);
+                return;
+            }
+        }
+
+    }//changeAmound
+
     getShortProduct( product ){
 
-            console.log(product.ProductID);
+            //console.log(product.ProductID);
 
         return {
             'id' : product.ProductID,
@@ -55,4 +69,20 @@ export default class CartService{
         this.cart.length = 0;
     }
 
-}
+    removeProduct ( index ){
+
+        this.cart.splice( index, 1 );
+
+        this._localStorageService.set('cart' , this.cart);
+
+    }//removeProduct
+
+    OnSummRefresh(callback){
+        this._refreshSumm = callback;
+    }
+
+    summRefresh(){
+        if(this._refreshSumm)
+        this._refreshSumm();
+    }
+}//CartService

@@ -1,0 +1,120 @@
+<div class="bannerSlim" style="background-image: url('images/banner.png');
+        background-position-y: 55%;">
+    <div class="bannerWrap"></div>
+    <h2 ng-bind="product.ProductTitle">Название продукта</h2>
+</div>
+<div class="wrapper clearfix">
+    <!-- SVG Sprite -->
+    <div style="height: 0; width: 0; position: absolute; visibility: hidden;" aria-hidden="true">
+        <svg version="1.1" xmlns="http://www.w2.org/2000/svg" xmlns:xlink="http://www.w2.org/1999/xlink" focusable="false">
+            <symbol id="ripply-scott" viewBox="0 0 100 100">
+                <circle id="ripple-shape" cx="1" cy="1" r="1" />
+            </symbol>
+        </svg>
+    </div>
+
+    <div class="clearfix product">
+
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 productImg">
+            <img ng-src="{{product.Images[0]}}" alt="">
+        </div>
+        <div class=" col-lg-6 col-md-6 col-sm-6 col-xs-12 productText">
+
+            <div class="productBlock">
+                <h3 class="productPrice" ng-bind-template="${{product.ProductPrice}}">$99,00</h3>
+                <div class="productToCart">
+                    <div class="clearfix buttonBlock">
+                        <input ng-change="changeAmount(product)" class="input" type="text" ng-model="product.amount">
+                        <button ng-show="!product.isInCart"  ng-click="AddProduct(product)" id="js-ripple-btn" class="button styl-material">
+                            В корзину
+                            <svg class="ripple-obj" id="js-ripple">
+                                <use height="100" width="100" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#ripply-scott" class="js-ripple"></use>
+                            </svg>
+                        </button>
+                        <div ng-show="product.isInCart" class="clearfix buttonBlock">
+                            <div class="inCart" style="text-align: center" translate="LAYOUT_IN_CART_LINK">Уже в корзине</div>
+                        </div>
+                    </div>
+
+                </div>
+                <h3>Описание</h3>
+                <p ng-bind="product.Description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sagittis erat sit amet enim auctor feugiat.  Aenean nec ultricies enim. Vestibulum ut viverra orci. Maecenas suscipit odio quis felis varius mollis.  Aenean nec ultricies enim. Vestibulum ut viverra orci. Maecenas suscipit odio quis felis varius mollis. </p>
+
+            </div>
+
+        </div>
+
+    </div>
+    <div class="clearfix product">
+        <div class=" col-lg-12 col-md-12 col-sm-12 col-xs-12 productText">
+
+            <div>
+                <div class="tabsContent">
+                    <ul class="nav nav-tabs" id="myTabs" role="tablist">
+                        <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Описание</a></li>
+                        <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Состав</a></li>
+                        <li role="presentation"><a href="#info" aria-controls="info" role="tab" data-toggle="tab">Информация о продукте</a></li>
+                        <li role="presentation" class=""><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Описание</a></li>
+                        <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Состав</a></li>
+                        <li role="presentation"><a href="#info" aria-controls="info" role="tab" data-toggle="tab">Информация о продукте</a></li>
+                        <li role="presentation" class=""><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Описание</a></li>
+                        <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Состав</a></li>
+                        <li role="presentation"><a href="#info" aria-controls="info" role="tab" data-toggle="tab">Информация о продукте</a></li>
+
+                    </ul>
+                </div>
+
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active productBlock" id="home">
+
+                        <p ng-bind="product.Description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sagittis erat sit amet enim auctor feugiat.  Aenean nec ultricies enim. Vestibulum ut viverra orci. Maecenas suscipit odio quis felis varius mollis.  Aenean nec ultricies enim. Vestibulum ut viverra orci. Maecenas suscipit odio quis felis varius mollis. </p>
+
+                    </div>
+                    <div role="tabpanel" class="tab-pane productBlock" id="profile">
+
+                        <p ng-bind="product.Composition">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sagittis erat sit amet enim auctor feugiat. </p>
+                    </div>
+                    <div role="tabpanel" class="tab-pane productBlock" id="info">
+
+                        <p><span class="bold">Дозировка на год: </span>{{product.Info.DosageInMonth*12}}</p>
+                        <p><span class="bold">Дозировка на 6 месяцев:</span> {{product.Info.DosageInMonth*6}}</p>
+                        <p><span class="bold">Противопоказания: </span> {{product.Info.Contraindications}}</p>
+                        <p><span class="bold">Дополнительные факты: </span> {{product.Info.Additional}}</p>
+                        <p><span class="bold">Количество в упаковке: </span> {{product.Info.InPack}}</p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    (function($){
+        $(window).load(function(){
+
+            /*
+            get snap amount programmatically or just set it directly (e.g. "273")
+            in this example, the snap amount is list item's (li) outer-width (width+margins)
+            */
+            var amount=Math.max.apply(Math,$(".tabsContent li").map(function(){return $(this).outerWidth(true);}).get());
+
+            $(".tabsContent").mCustomScrollbar({
+                axis:"x",
+                theme:"inset",
+                advanced:{
+                    autoExpandHorizontalScroll:true
+                },
+                scrollButtons:{
+                    enable:true,
+                    scrollType:"stepped"
+                },
+                keyboard:{scrollType:"stepped"},
+                snapAmount:amount,
+                mouseWheel:{scrollAmount:amount}
+            });
+
+        });
+    })(jQuery);
+</script>
