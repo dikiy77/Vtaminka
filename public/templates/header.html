@@ -17,7 +17,7 @@
 
         <div class="delimeter"></div>
         <div class="cart">
-            <a href="cart.html">
+            <a ui-sref="cart">
                 <span class="cartIcon">n</span>
                 <span class="cartCount" ng-bind="cart.length" ></span>
             </a>
@@ -44,17 +44,17 @@
             <a href="index.html"><img src="images/logo.png" alt=""></a>
         </div>
         <div class="cart">
-            <a href="cart.html">
+            <a ui-sref="cart">
                 <span class="cartIcon">n</span>
                 <span class="cartCount" ng-bind="cart.length"></span>
             </a>
         </div>
         <div class="menu hidden-sm hidden-xs">
             <nav class="mainMenu cl-effect-5">
-                <a href="#" ><span data-hover='Мужские'>Мужские</span></a>
-                <a href="#" ><span data-hover='Женские'>Женские</span></a>
-                <a href="#" ><span data-hover='Детские'>Детские</span></a>
-                <a href="#" ><span data-hover='Спортивные'>Спортивные</span></a>
+                <a href="#" ><span data-hover="{{'LAYOUT_MANS_LINK'|translate}}" translate >LAYOUT_MANS_LINK</span></a>
+                <a href="#" ><span data-hover="{{'LAYOUT_FEMALE_LINK'|translate}}" translate >LAYOUT_FEMALE_LINK</span></a>
+                <a href="#" ><span data-hover="{{'LAYOUT_CHILDRENS_LINK'|translate}}" translate >LAYOUT_CHILDRENS_LINK</span></a>
+                <a href="#" ><span data-hover="{{'LAYOUT_SPORTS_LINK'|translate}}" translate >LAYOUT_SPORTS_LINK</span></a>
             </nav>
         </div>
 

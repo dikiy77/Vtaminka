@@ -1,12 +1,15 @@
 <figure>
     <div class="figurWrap">
         <h3>
-            <a href="product.html">
+            <a ui-sref="SingleProduct({'productID':product.ProductID})">
                 {{product.ProductTitle }} &mdash;
                 <span class="price" ng-bind-template="${{product.ProductPrice}}" ></span>
             </a>
         </h3>
-        <img ng-src="{{product.ProductImage}}">
+        <a ui-sref="SingleProduct({'productID':product.ProductID})">
+            <img ng-src="{{product.ProductImage}}">
+        </a>
+
     </div>
     <figcaption>
         <div ng-show="!product.isInCart"  class="clearfix buttonBlock">
@@ -17,7 +20,7 @@
                 <option value="2">2</option>
             </select>
 
-            <button ng-click="AddProduct(product)" id="js-ripple-btn" class="button styl-material">
+            <button ng-click="AddProduct(product)" id="js-ripple-btn" class="button styl-material" translate="LAYOUT_ADD_TO_CART_LINK">
                 В корзину
                 <svg class="ripple-obj" id="js-ripple">
                     <use height="100" width="100" xlink:href="#ripply-scott" class="js-ripple"></use>
@@ -25,7 +28,7 @@
             </button>
         </div>
         <div ng-show="product.isInCart" class="clearfix buttonBlock">
-            <div class="inCart">Уже в корзине</div>
+            <div class="inCart" translate="LAYOUT_IN_CART_LINK">Уже в корзине</div>
         </div>
     </figcaption>
 

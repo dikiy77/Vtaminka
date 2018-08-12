@@ -4,6 +4,27 @@
   "LAYOUT_PRODUCTS_LINK": "Товары",
   "LAYOUT_BLOG_LINK": "Блог",
   "LAYOUT_ABOUT_LINK": "О компании",
-  "LAYOUT_CONTACTS_LINK": "Контакты"
+  "LAYOUT_CONTACTS_LINK": "Контакты",
+  "LAYOUT_MANS_LINK": "Мужские",
+  "LAYOUT_FEMALE_LINK": "Женские",
+  "LAYOUT_CHILDRENS_LINK": "Детские",
+  "LAYOUT_SPORTS_LINK": "Спортивные",
+  "LAYOUT_CATALOGUE_LINK": "Каталог",
+  "LAYOUT_MORE_LINK": "Еще...",
+  "LAYOUT_ADD_TO_CART_LINK": "В корзину",
+  "LAYOUT_IN_CART_LINK": "Уже в корзине",
+  "LAYOUT_VITAMINKA_LINK": "Витаминки",
+  "LAYOUT_LATEST_ARTICLES_LINK": "Последние статьи",
+  "LAYOUT_JOIN_US_LINK": "Присоединяйтесь к нам",
+  "LAYOUT_REGISTRATION_LINK": "Регистрация",
+  "LAYOUT_AUTHORIZATION_LINK": "Авторизация",
+  "LAYOUT_NEWS_LINK": "Новости",
+  "LAYOUT_CONTACT_US_LINK": "Свяжитесь с нами!",
+  "LAYOUT_YOUR_NAME_LINK": "Ваше имя",
+  "LAYOUT_CONTACT_EMAIL_LINK": "Ваш email",
+  "LAYOUT_CONTACT_NUMBER_LINK": "Контактный телефон",
+  "LAYOUT_SEND_LINK": "ОТПРАВИТЬ",
+  "LAYOUT_BASKET_LINK": "Корзина",
+  "LAYOUT_TOTAL_LINK": "Итого"
   
 }

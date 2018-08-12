@@ -22,13 +22,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ovsyanikov94/Vtaminka.git"
+    "url": "git+https://github.com/dikiy77/Vtaminka.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/ovsyanikov94/Vtaminka/issues"
+    "url": "https://github.com/dikiy77/Vtaminka/issues"
   },
-  "homepage": "https://github.com/ovsyanikov94/Vtaminka.git#readme"
+  "homepage": "https://github.com/dikiy77/Vtaminka.git#readme"
 }

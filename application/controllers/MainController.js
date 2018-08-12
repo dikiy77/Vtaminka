@@ -6,6 +6,7 @@ export default class MainController{
 
         $scope.updateTranslations = function ( lang ){
             $translate.use(lang);
+            $scope.currentLang = lang;
         }
 
     }//constructor
